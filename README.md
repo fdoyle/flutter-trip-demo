@@ -10,4 +10,4 @@ my implementation:
 
 ![](https://github.com/fdoyle/flutter-trip-demo/blob/master/flight-demo-2.gif)
 
-The hero animation is still a WIP, but im happy with the progress
+The hero animation is still a WIP, but not bad for a few hours work. 
