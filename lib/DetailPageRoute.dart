@@ -1,3 +1,4 @@
+import 'package:flight_app/Page.dart';
 import 'package:flight_app/data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -66,13 +67,21 @@ class DetailWidget extends StatelessWidget {
                                         color: Color(0x88000000), blurRadius: 12)
                                   ],
                                   fontWeight: FontWeight.bold,
+                                  fontFamily: "Roboto",
                                   color: Colors.white),
                             ),
                           ),
                         ),
                       )
                     ],
-                  )
+                  ),
+                  Hero(
+                    tag: "info${flight.id}",
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: FlightInfo(flight),
+                    ),
+                  ),
                 ],
               ),
             ])));

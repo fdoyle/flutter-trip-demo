@@ -5,6 +5,18 @@ import 'package:flight_app/data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+
+Color toFromTextColor = Color(0xFF6E6896);
+
+
+TextStyle little = TextStyle(color: toFromTextColor, fontSize: 12,
+  fontWeight: FontWeight.normal,
+  fontFamily: "Roboto",);
+TextStyle big = TextStyle(
+    color: toFromTextColor, fontWeight: FontWeight.bold, fontSize: 50,
+  fontFamily: "Roboto",);
+
+
 class PageWidget extends StatelessWidget {
   double distanceFromCenter = 0;
   Flight flight;
@@ -16,10 +28,6 @@ class PageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color toFromTextColor = Color(0xFF6E6896);
-    TextStyle little = TextStyle(color: toFromTextColor, fontSize: 12);
-    TextStyle big = TextStyle(
-        color: toFromTextColor, fontWeight: FontWeight.bold, fontSize: 50);
 
     TextStyle smallGrey = TextStyle(
         color: Colors.black26, fontWeight: FontWeight.bold, fontSize: 12);
@@ -73,33 +81,23 @@ class PageWidget extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text("FROM", style: little),
-                                    Text("${flight.sourceCode}", style: big),
-                                    Text(
-                                        "${flight.source}, ${flight.sourceCountry}",
-                                        style: little)
-                                  ],
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: <Widget>[
-                                    Text("TO", style: little),
-                                    Text("${flight.destinationCode}",
-                                        style: big),
-                                    Text(
-                                        "${flight.destination}, ${flight.destinationCountry}",
-                                        style: little)
-                                  ],
-                                )
-                              ],
+                          Hero(
+                            tag: "info${flight.id}",
+                            flightShuttleBuilder: (
+                                BuildContext flightContext,
+                                Animation<double> animation,
+                                HeroFlightDirection flightDirection,
+                                BuildContext fromHeroContext,
+                                BuildContext toHeroContext,
+                            ) {
+                              return Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: FlightInfo(flight),
+                              );
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: FlightInfo(flight),
                             ),
                           ),
                           Divider(
@@ -152,11 +150,50 @@ class PageWidget extends StatelessWidget {
                         Shadow(color: Color(0x88000000), blurRadius: 12)
                       ],
                       fontWeight: FontWeight.bold,
+                      fontFamily: "Roboto",
                       color: Colors.white),
                 ),
               ),
             ),
           ),
+        )
+      ],
+    );
+  }
+}
+
+
+
+class FlightInfo extends StatelessWidget{
+  Flight flight;
+  FlightInfo(this.flight);
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text("FROM", style: little),
+            Text("${flight.sourceCode}", style: big),
+            Text(
+                "${flight.source}, ${flight.sourceCountry}",
+                style: little)
+          ],
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: <Widget>[
+            Text("TO", style: little, maxLines: 1,),
+            Text("${flight.destinationCode}",
+                style: big),
+            Text(
+                "${flight.destination}, ${flight.destinationCountry}",
+                style: little, maxLines: 1,)
+          ],
         )
       ],
     );
