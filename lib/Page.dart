@@ -1,13 +1,16 @@
 import 'dart:math';
 
+import 'package:flight_app/data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class PageWidget extends StatelessWidget {
   double distanceFromCenter = 0;
+  Flight flight;
 
-  PageWidget(double distanceFromCenter){
+  PageWidget(Flight flight, double distanceFromCenter){
     this.distanceFromCenter = distanceFromCenter;
+    this.flight = flight;
   }
 
 
@@ -59,8 +62,7 @@ class PageWidget extends StatelessWidget {
                   children: <Widget>[
                     AspectRatio(
                       aspectRatio: 16.0/11.0,
-                      child: Image.network(
-                          "http://all4desktop.com/data_images/original/4203287-eiffel-tower-at-night-paris-france-normal.jpg",
+                      child: Image.network(flight.url,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -73,16 +75,16 @@ class PageWidget extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text("FROM", style: little),
-                              Text("TZX", style: big),
-                              Text("Trabzon, Turkey", style: little)
+                              Text("${ flight.sourceCode}", style: big),
+                              Text("${flight.source}, ${flight.sourceCountry}", style: little)
                             ],
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: <Widget>[
                               Text("TO", style: little),
-                              Text("CDG", style: big),
-                              Text("Paris, France", style: little)
+                              Text("${flight.destinationCode}", style: big),
+                              Text("${flight.destination}, ${flight.destinationCountry}", style: little)
                             ],
                           )
                         ],
@@ -97,7 +99,7 @@ class PageWidget extends StatelessWidget {
                         children: <Widget>[
                           Expanded(child: Text("non-Stop", style: smallGrey,)),
                           Text("\$", style: smallGrey,),
-                          Text("879", style: bigRed,)
+                          Text("${flight.price}", style: bigRed,)
                         ],
                       ),
                     )
@@ -115,7 +117,7 @@ class PageWidget extends StatelessWidget {
             opacity: pow(2, -40*pow(distanceFromCenter, 2)),
             child: Transform.translate(
               offset: Offset(distanceFromCenter * 40, 0),
-              child: Text("Paris",
+              child: Text("${flight.destination}",
                 style: TextStyle(
                 fontSize: 64,
                   shadows: [

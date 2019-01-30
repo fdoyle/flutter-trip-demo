@@ -1,7 +1,8 @@
 import 'dart:math';
 
 import 'package:flight_app/BackgroundGradientWidget.dart';
-import 'package:flight_app/pageWidget.dart';
+import 'package:flight_app/Page.dart';
+import 'package:flight_app/data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -75,6 +76,8 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
 
+    List<Flight> flights = getFlights();
+
     return Scaffold(
       body: Container(
         child: Stack(children: <Widget>[
@@ -93,12 +96,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Stack(children: <Widget>[
                     PageView.builder(
                       itemBuilder: (BuildContext c, int i) {
+                        Flight flight = flights[i];
                         return Stack(children: <Widget>[
                           Positioned(
                             child: Opacity(
                               opacity: 0.2* pow(2, -40*pow(currentPosition - i, 2)),
                               child: Text(
-                                "Thisisareallylongstring",
+                                flight.destination,
                                 overflow: TextOverflow.clip,
                                 maxLines: 1,
                                 style: TextStyle(
@@ -112,19 +116,22 @@ class _MyHomePageState extends State<MyHomePage> {
                           ],
                         overflow: Overflow.visible,);
                       },
+                      itemCount: flights.length,
                       pageSnapping: false,
                       reverse: true,
                       controller: secondaryController,
                     ),
                     PageView.builder(
                         itemBuilder: (BuildContext c, int i) {
+                          Flight flight = flights[i];
                           return Center(
                             child: Padding(
                               padding: const EdgeInsets.all(10.0),
-                              child: PageWidget(currentPosition - i),
+                              child: PageWidget(flight, currentPosition - i),
                             ),
                           );
                         },
+                        itemCount: flights.length,
                         controller: primaryController),
                   ]),
                 ),
