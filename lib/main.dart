@@ -129,7 +129,9 @@ class _MyHomePageState extends State<MyHomePage> {
                           return Center(
                             child: Padding(
                               padding: const EdgeInsets.all(10.0),
-                              child: PageWidget(flight, currentPosition - i),
+                              child: Opacity(
+                                  opacity: 0.5* pow(2, -3*pow(currentPosition - i, 2))+.5,
+                                  child: PageWidget(flight, currentPosition - i)),
                             ),
                           );
                         },
