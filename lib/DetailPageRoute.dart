@@ -67,6 +67,7 @@ class DetailWidget extends StatelessWidget {
                                         color: Color(0x88000000), blurRadius: 12)
                                   ],
                                   fontWeight: FontWeight.bold,
+                                  decoration: TextDecoration.none,
                                   fontFamily: "Roboto",
                                   color: Colors.white),
                             ),

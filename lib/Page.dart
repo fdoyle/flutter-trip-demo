@@ -11,10 +11,12 @@ Color toFromTextColor = Color(0xFF6E6896);
 
 TextStyle little = TextStyle(color: toFromTextColor, fontSize: 12,
   fontWeight: FontWeight.normal,
-  fontFamily: "Roboto",);
+  fontFamily: "Roboto",
+  decoration: TextDecoration.none,);
 TextStyle big = TextStyle(
     color: toFromTextColor, fontWeight: FontWeight.bold, fontSize: 50,
-  fontFamily: "Roboto",);
+  fontFamily: "Roboto",
+  decoration: TextDecoration.none,);
 
 
 class PageWidget extends StatelessWidget {
@@ -151,6 +153,8 @@ class PageWidget extends StatelessWidget {
                       ],
                       fontWeight: FontWeight.bold,
                       fontFamily: "Roboto",
+                      decoration: TextDecoration.none,
+                      decorationColor: Colors.transparent,
                       color: Colors.white),
                 ),
               ),
