@@ -1,5 +1,7 @@
 # flight_app
 
+Thought this looked cool, so I made it in flutter. 
+
 https:&#x2F;&#x2F;dribbble.com&#x2F;shots&#x2F;2938101-Flight-App-Campaign-Screen
 
 their concept:
