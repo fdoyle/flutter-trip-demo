@@ -2,15 +2,12 @@
 
 https:&#x2F;&#x2F;dribbble.com&#x2F;shots&#x2F;2938101-Flight-App-Campaign-Screen
 
-## Getting Started
+their concept:
+https://cdn.dribbble.com/users/83361/screenshots/2938101/_flightapp_preview.gif
+![](https://cdn.dribbble.com/users/83361/screenshots/2938101/_flightapp_preview.gif)
 
-This project is a starting point for a Flutter application.
+my implementation:
 
-A few resources to get you started if this is your first Flutter project:
+![](https://github.com/fdoyle/flutter-trip-demo/blob/master/flight-demo-2.gif)
 
-- [Lab: Write your first Flutter app](https://flutter.io/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.io/docs/cookbook)
-
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+The hero animation is still a WIP, but not bad for a few hours work. 
