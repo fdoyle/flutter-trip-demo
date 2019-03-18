@@ -5,19 +5,22 @@ import 'package:flight_app/data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-
 Color toFromTextColor = Color(0xFF6E6896);
 
-
-TextStyle little = TextStyle(color: toFromTextColor, fontSize: 12,
+TextStyle little = TextStyle(
+  color: toFromTextColor,
+  fontSize: 12,
   fontWeight: FontWeight.normal,
   fontFamily: "Roboto",
-  decoration: TextDecoration.none,);
+  decoration: TextDecoration.none,
+);
 TextStyle big = TextStyle(
-    color: toFromTextColor, fontWeight: FontWeight.bold, fontSize: 50,
+  color: toFromTextColor,
+  fontWeight: FontWeight.bold,
+  fontSize: 50,
   fontFamily: "Roboto",
-  decoration: TextDecoration.none,);
-
+  decoration: TextDecoration.none,
+);
 
 class PageWidget extends StatelessWidget {
   double distanceFromCenter = 0;
@@ -30,7 +33,6 @@ class PageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     TextStyle smallGrey = TextStyle(
         color: Colors.black26, fontWeight: FontWeight.bold, fontSize: 12);
 
@@ -38,6 +40,7 @@ class PageWidget extends StatelessWidget {
         color: Color(0xFFB0548B), fontWeight: FontWeight.bold, fontSize: 42);
 
     return Stack(
+      overflow: Overflow.visible,
       children: <Widget>[
         Padding(
           child: Container(
@@ -63,10 +66,10 @@ class PageWidget extends StatelessWidget {
                         child: Hero(
                           tag: "background${flight.id}",
                           child: ClipRRect(
-                            borderRadius: BorderRadius.circular(4),
-                            child: Container(
-                            decoration: BoxDecoration(color: Colors.white),
-                          )),
+                              borderRadius: BorderRadius.circular(4),
+                              child: Container(
+                                decoration: BoxDecoration(color: Colors.white),
+                              )),
                         ),
                       ),
                       Column(
@@ -86,15 +89,15 @@ class PageWidget extends StatelessWidget {
                           Hero(
                             tag: "info${flight.id}",
                             flightShuttleBuilder: (
-                                BuildContext flightContext,
-                                Animation<double> animation,
-                                HeroFlightDirection flightDirection,
-                                BuildContext fromHeroContext,
-                                BuildContext toHeroContext,
+                              BuildContext flightContext,
+                              Animation<double> animation,
+                              HeroFlightDirection flightDirection,
+                              BuildContext fromHeroContext,
+                              BuildContext toHeroContext,
                             ) {
                               return Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: FlightInfo(flight),
+                                padding: const EdgeInsets.all(12.0),
+                                child: FlightInfo(flight),
                               );
                             },
                             child: Padding(
@@ -135,27 +138,36 @@ class PageWidget extends StatelessWidget {
           ),
           padding: EdgeInsets.only(top: 40),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: Opacity(
-            opacity: pow(2, -40 * pow(distanceFromCenter, 2)),
-            child: Transform.translate(
-              offset: Offset(distanceFromCenter * 40, 0),
-              child: Hero(
-                tag: "title${flight.id}",
-                child: Text(
-                  "${flight.destination}",
-                  maxLines: 1,
-                  style: TextStyle(
-                      fontSize: 64,
-                      shadows: [
-                        Shadow(color: Color(0x88000000), blurRadius: 12)
-                      ],
-                      fontWeight: FontWeight.bold,
-                      fontFamily: "Roboto",
-                      decoration: TextDecoration.none,
-                      decorationColor: Colors.transparent,
-                      color: Colors.white),
+        //this Positioned.directional binds the below text to the top-left corner of the stack
+        //but does not bind it on the "end" side, allowing the title to overflow outside the stack
+        //it looks bad on long titles like "new york", but that's what the design calls for
+        Positioned.directional(
+          textDirection: TextDirection.ltr,
+          top: 0,
+          start: 0,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 8),
+            child: Opacity(
+              opacity: pow(2, -40 * pow(distanceFromCenter, 2)),
+              child: Transform.translate(
+                offset: Offset(distanceFromCenter * 40, 0),
+                child: Hero(
+                  tag: "title${flight.id}",
+                  child: Text(
+                    "${flight.destination}",
+                    maxLines: 1,
+                    overflow: TextOverflow.fade,
+                    style: TextStyle(
+                        fontSize: 64,
+                        shadows: [
+                          Shadow(color: Color(0x88000000), blurRadius: 12)
+                        ],
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "Roboto",
+                        decoration: TextDecoration.none,
+                        decorationColor: Colors.transparent,
+                        color: Colors.white),
+                  ),
                 ),
               ),
             ),
@@ -166,12 +178,10 @@ class PageWidget extends StatelessWidget {
   }
 }
 
-
-
-class FlightInfo extends StatelessWidget{
+class FlightInfo extends StatelessWidget {
   Flight flight;
-  FlightInfo(this.flight);
 
+  FlightInfo(this.flight);
 
   @override
   Widget build(BuildContext context) {
@@ -183,20 +193,23 @@ class FlightInfo extends StatelessWidget{
           children: <Widget>[
             Text("FROM", style: little),
             Text("${flight.sourceCode}", style: big),
-            Text(
-                "${flight.source}, ${flight.sourceCountry}",
-                style: little)
+            Text("${flight.source}, ${flight.sourceCountry}", style: little)
           ],
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
-            Text("TO", style: little, maxLines: 1,),
-            Text("${flight.destinationCode}",
-                style: big),
             Text(
-                "${flight.destination}, ${flight.destinationCountry}",
-                style: little, maxLines: 1,)
+              "TO",
+              style: little,
+              maxLines: 1,
+            ),
+            Text("${flight.destinationCode}", style: big),
+            Text(
+              "${flight.destination}, ${flight.destinationCountry}",
+              style: little,
+              maxLines: 1,
+            )
           ],
         )
       ],
